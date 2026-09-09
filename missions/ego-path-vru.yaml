@@ -1,0 +1,46 @@
+name: ego-path-vru-monitor
+description: >
+  A forward-facing driving camera must flag any vulnerable road user (pedestrian or cyclist) whose
+  footpoint falls inside the ego vehicle's near path, quickly enough to act. Critical events must be
+  detected reliably and alerted with low latency; the system must keep working when the remote-assist
+  / cloud link is lost. Cloud confirmation (precision), historical indexing and background fidelity
+  may be sacrificed. This is the self-driving front-end of the same resilience compiler used for the
+  restricted-zone (CCTV) workload; only the workload, zone geometry and invariants differ.
+
+invariants:
+  - metric: critical_event_recall
+    min: 0.95
+    description: fraction of ground-truth VRU-in-ego-path events that produced an alert
+  - metric: alert_latency_p95_ms
+    max: 500
+    description: >
+      p95 wall-clock time from the first in-path VRU frame to the alert. Tighter than the CCTV bound
+      (2000 ms) because a vehicle in motion has far less reaction budget than a facility monitor.
+
+objectives:
+  - metric: alert_precision
+    direction: maximize
+    weight: 2.0
+  - metric: cloud_bytes_total
+    direction: minimize
+    weight: 1.0
+  - metric: cpu_percent_mean
+    direction: minimize
+    weight: 1.0
+
+priorities:
+  critical_detection: 100
+  emergency_alerting: 100
+  cloud_confirmation: 50
+  historical_indexing: 20
+  background_streams: 10
+
+degradable_capabilities:
+  - cloud_confirmation
+  - historical_indexing
+  - background_stream_fps
+  - background_stream_count
+  - detector_resolution
+
+survivability:
+  wan_outage: required

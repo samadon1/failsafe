@@ -1,0 +1,16 @@
+{
+  "domain": "self-driving (dashcam)",
+  "source": "KITTI multi-object tracking / training / sequence 0016 (urban crossing)",
+  "license": "CC-BY-NC-SA 3.0",
+  "frames": 209,
+  "src_fps": 10,
+  "detector": "YOLOv8n @640 CPU",
+  "conf": 0.3,
+  "iou_hit": 0.4,
+  "vru_detection_recall": 0.617,
+  "vru_detection_precision": 0.864,
+  "gt_vru_boxes": 2299,
+  "egopath_frames_with_vru": 176,
+  "egopath_agreement": 0.989,
+  "note": "Real dashcam footage (Pedestrian+Cyclist GT). VRU = person/rider; YOLO detects persons, so cyclist IoU is conservative. Never used by the search. Not a certified system."
+}

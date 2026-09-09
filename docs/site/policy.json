@@ -1,0 +1,368 @@
+{
+ "mission": "restricted-zone-monitor",
+ "mission_hash": "c6a352f0e383",
+ "corpus": "quick/seeds 1,2,3",
+ "compiled_at": "2026-09-07T09:16:38.914593+00:00",
+ "admission": {
+  "min_clean_runs": 2,
+  "min_clean_seeds": 2,
+  "require_robust": false,
+  "rule": "every clean run passes, across >=2 corpus seeds; tier = worst clean run; recall/p95/precision = worst case over clean runs"
+ },
+ "modes": [
+  {
+   "name": "normal",
+   "conditions": {
+    "cloud_state": [
+     "healthy"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "config": {
+    "cloud_confirmation": true,
+    "cloud_timeout_ms": 1000,
+    "critical_fps": 15,
+    "background_fps": 2,
+    "detector_resolution": 640,
+    "historical_indexing": true,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 1.0,
+   "verification": {
+    "tier": "marginal",
+    "recall": 0.9642857142857143,
+    "p95_latency_ms": 1124.273233093552,
+    "precision": 1.0,
+    "runs": 5,
+    "clean_runs": 3,
+    "pass_rate": 0.6,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     1,
+     2,
+     3
+    ],
+    "scenario": "healthy",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud timeout 3000\u21921000 ms"
+   ]
+  },
+  {
+   "name": "severely-slow-cloud",
+   "conditions": {
+    "cloud_state": [
+     "severely_slow"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "config": {
+    "cloud_confirmation": true,
+    "cloud_timeout_ms": 1000,
+    "critical_fps": 15,
+    "background_fps": 2,
+    "detector_resolution": 640,
+    "historical_indexing": true,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 1.0,
+   "verification": {
+    "tier": "marginal",
+    "recall": 0.9824561403508771,
+    "p95_latency_ms": 1756.0570097132822,
+    "precision": 1.0,
+    "runs": 2,
+    "clean_runs": 2,
+    "pass_rate": 1.0,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     2,
+     3
+    ],
+    "scenario": "wan_severely_slow",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud timeout 3000\u21921000 ms"
+   ]
+  },
+  {
+   "name": "offline-cloud",
+   "conditions": {
+    "cloud_state": [
+     "offline"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "config": {
+    "cloud_confirmation": true,
+    "cloud_timeout_ms": 1000,
+    "critical_fps": 15,
+    "background_fps": 2,
+    "detector_resolution": 640,
+    "historical_indexing": true,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 1.0,
+   "verification": {
+    "tier": "robust",
+    "recall": 0.9824561403508771,
+    "p95_latency_ms": 681.5643854963113,
+    "precision": 1.0,
+    "runs": 3,
+    "clean_runs": 3,
+    "pass_rate": 1.0,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     1,
+     2,
+     3
+    ],
+    "scenario": "wan_offline",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud timeout 3000\u21921000 ms"
+   ]
+  },
+  {
+   "name": "slow-cloud",
+   "conditions": {
+    "cloud_state": [
+     "slow"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "config": {
+    "cloud_confirmation": false,
+    "cloud_timeout_ms": 3000,
+    "critical_fps": 15,
+    "background_fps": 5,
+    "detector_resolution": 640,
+    "historical_indexing": false,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 0.75,
+   "verification": {
+    "tier": "marginal",
+    "recall": 0.9649122807017544,
+    "p95_latency_ms": 527.3069482546724,
+    "precision": 1.0,
+    "runs": 3,
+    "clean_runs": 3,
+    "pass_rate": 1.0,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     1,
+     2,
+     3
+    ],
+    "scenario": "wan_slow",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud confirmation off",
+    "historical indexing off"
+   ]
+  },
+  {
+   "name": "zombie-cloud",
+   "conditions": {
+    "cloud_state": [
+     "zombie"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "config": {
+    "cloud_confirmation": false,
+    "cloud_timeout_ms": 3000,
+    "critical_fps": 15,
+    "background_fps": 5,
+    "detector_resolution": 640,
+    "historical_indexing": false,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 0.75,
+   "verification": {
+    "tier": "marginal",
+    "recall": 0.9649122807017544,
+    "p95_latency_ms": 527.3069482546724,
+    "precision": 1.0,
+    "runs": 3,
+    "clean_runs": 3,
+    "pass_rate": 1.0,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     1,
+     2,
+     3
+    ],
+    "scenario": "wan_zombie",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud confirmation off",
+    "historical indexing off"
+   ]
+  },
+  {
+   "name": "dead-cloud",
+   "conditions": {
+    "cloud_state": [
+     "timeout"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "config": {
+    "cloud_confirmation": false,
+    "cloud_timeout_ms": 3000,
+    "critical_fps": 15,
+    "background_fps": 5,
+    "detector_resolution": 640,
+    "historical_indexing": false,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 0.75,
+   "verification": {
+    "tier": "marginal",
+    "recall": 0.9649122807017544,
+    "p95_latency_ms": 527.3069482546724,
+    "precision": 1.0,
+    "runs": 3,
+    "clean_runs": 3,
+    "pass_rate": 1.0,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     1,
+     2,
+     3
+    ],
+    "scenario": "wan_timeout",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud confirmation off",
+    "historical indexing off"
+   ]
+  },
+  {
+   "name": "low-bandwidth",
+   "conditions": {
+    "cloud_state": [
+     "healthy"
+    ],
+    "compute_pressure": [
+     "normal"
+    ],
+    "bandwidth_mbps_max": 2.0
+   },
+   "config": {
+    "cloud_confirmation": false,
+    "cloud_timeout_ms": 3000,
+    "critical_fps": 15,
+    "background_fps": 5,
+    "detector_resolution": 640,
+    "historical_indexing": false,
+    "on_cloud_failure": "alert_local"
+   },
+   "capability_retained": 0.75,
+   "verification": {
+    "tier": "marginal",
+    "recall": 0.9649122807017544,
+    "p95_latency_ms": 527.3069482546724,
+    "precision": 1.0,
+    "runs": 3,
+    "clean_runs": 3,
+    "pass_rate": 1.0,
+    "clean_pass_rate": 1.0,
+    "seeds": [
+     1,
+     2,
+     3
+    ],
+    "scenario": "bandwidth_2mbps",
+    "scoring_rule": "match-window[start-0.5s, end+2.0s]"
+   },
+   "sacrifices": [
+    "cloud confirmation off",
+    "historical indexing off"
+   ]
+  }
+ ],
+ "unverified": [
+  {
+   "scenario": "compute_severe",
+   "conditions": {
+    "cloud_state": [
+     "healthy"
+    ],
+    "compute_pressure": [
+     "severe"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "reason": "refuted",
+   "exhaustive": true,
+   "candidates_tested": 73,
+   "best_candidate_config": null,
+   "ceilings": {
+    "critical_event_recall": 0.8070175438596491,
+    "alert_latency_p95_ms": 452.021791569102
+   },
+   "required": {
+    "critical_event_recall": ">= 0.95",
+    "alert_latency_p95_ms": "<= 2000.0"
+   }
+  },
+  {
+   "scenario": "offline_compute_severe",
+   "conditions": {
+    "cloud_state": [
+     "offline"
+    ],
+    "compute_pressure": [
+     "severe"
+    ],
+    "bandwidth_mbps_max": null
+   },
+   "reason": "refuted",
+   "exhaustive": false,
+   "candidates_tested": 25,
+   "best_candidate_config": null,
+   "ceilings": {
+    "critical_event_recall": 0.8070175438596491,
+    "alert_latency_p95_ms": 452.021791569102
+   },
+   "required": {
+    "critical_event_recall": ">= 0.95",
+    "alert_latency_p95_ms": "<= 2000.0"
+   }
+  }
+ ],
+ "fallback": {
+  "name": "island_10fps",
+  "verified_under": "healthy"
+ },
+ "notes": [
+  "fallback for unverified conditions is `island_10fps` (verified under healthy only); the runtime reports NO VERIFIED MODE when it is used outside those conditions"
+ ]
+}

@@ -1,0 +1,46 @@
+name: robot-safety-zone-monitor
+description: >
+  A mobile / collaborative robot must detect any human entering its safety envelope (speed-and-
+  separation monitoring) quickly enough to slow or stop, and must keep doing so when the cloud
+  planner or remote-assist link is lost. Critical events (human in the safety zone) must be detected
+  reliably and with low latency; cloud confirmation, historical indexing and background fidelity may
+  be sacrificed. This is the robot front-end of the same resilience compiler used for the CCTV,
+  self-driving and drone workloads; only the workload, zone geometry and invariants differ.
+
+invariants:
+  - metric: critical_event_recall
+    min: 0.95
+    description: fraction of ground-truth humans-in-safety-zone that produced a slow/stop alert
+  - metric: alert_latency_p95_ms
+    max: 400
+    description: >
+      p95 wall-clock time from the first in-zone human frame to the alert. Tighter than the CCTV bound
+      because a moving robot has very little separation budget (ISO/TS 15066 speed-and-separation).
+
+objectives:
+  - metric: alert_precision
+    direction: maximize
+    weight: 2.0
+  - metric: cloud_bytes_total
+    direction: minimize
+    weight: 1.0
+  - metric: cpu_percent_mean
+    direction: minimize
+    weight: 1.0
+
+priorities:
+  critical_detection: 100
+  emergency_alerting: 100
+  cloud_confirmation: 50
+  historical_indexing: 20
+  background_streams: 10
+
+degradable_capabilities:
+  - cloud_confirmation
+  - historical_indexing
+  - background_stream_fps
+  - background_stream_count
+  - detector_resolution
+
+survivability:
+  wan_outage: required

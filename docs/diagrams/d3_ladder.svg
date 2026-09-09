@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="1072" viewBox="0 0 1300 1072" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="7.5" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#7c848d"/></marker><marker id="ahg" markerWidth="10" markerHeight="10" refX="7.5" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#5c8f00"/></marker><marker id="aha" markerWidth="10" markerHeight="10" refX="7.5" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#e8862a"/></marker><filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0b132010" flood-opacity="0.18"/></filter></defs>
+<rect x="0" y="0" width="1300" height="1072" rx="0" fill="#ffffff"/>
+<text x="48" y="50" font-size="25" font-weight="800" fill="#1b2430" text-anchor="start">The degradation ladder</text>
+<text x="48" y="78" font-size="12.5" font-weight="400" fill="#5b6670" text-anchor="start">Each rung is a mode in the compiled policy: the condition it is verified for, what it keeps, what it gives up, and the numbers that passed.</text>
+<text x="48" y="97" font-size="12.5" font-weight="400" fill="#5b6670" text-anchor="start">The green panel is the worst run across every clean run (admission: 2 clean runs, all must pass). Corpus quick/seeds 1,2,3.</text>
+<rect x="48" y="118" width="1204" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="62" y="150.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(69,157.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M8.5 12l2.4 2.4L16 9.5"/></g>
+<text x="114" y="146" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">NORMAL</text>
+<text x="114" y="163" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud fine</text>
+<text x="114" y="180" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 1.00</text>
+<rect x="114" y="188" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="114" y="188" width="150.0" height="8" rx="4" fill="#76b900"/>
+<text x="378" y="152" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="440" y="152" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">cloud confirmation (1 s timeout) · indexing · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="378" y="180" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="440" y="180" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud timeout 3000→1000 ms</text>
+<rect x="996" y="140" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,158.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="167.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.964  ·  p95 1124 ms</text>
+<text x="1040" y="185.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">MARGINAL · worst of 3 clean runs</text>
+<line x1="82" y1="222" x2="112" y2="236" stroke="#5b6670" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="78" y="236" width="1174" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="92" y="268.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(99,275.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M8.5 12l2.4 2.4L16 9.5"/></g>
+<text x="144" y="264" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">SEVERELY-SLOW-CLOUD</text>
+<text x="144" y="281" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud very slow</text>
+<text x="144" y="298" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 1.00</text>
+<rect x="144" y="306" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="144" y="306" width="150.0" height="8" rx="4" fill="#76b900"/>
+<text x="408" y="270" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="470" y="270" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">cloud confirmation (1 s timeout) · indexing · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="408" y="298" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="470" y="298" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud timeout 3000→1000 ms</text>
+<rect x="996" y="258" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,276.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="285.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.982  ·  p95 1756 ms</text>
+<text x="1040" y="303.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">MARGINAL · worst of 2 clean runs</text>
+<line x1="112" y1="340" x2="142" y2="354" stroke="#5b6670" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="108" y="354" width="1144" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="122" y="386.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(129,393.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M8.5 12l2.4 2.4L16 9.5"/></g>
+<text x="174" y="382" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">OFFLINE-CLOUD</text>
+<text x="174" y="399" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud dead</text>
+<text x="174" y="416" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 1.00</text>
+<rect x="174" y="424" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="174" y="424" width="150.0" height="8" rx="4" fill="#76b900"/>
+<text x="438" y="388" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="500" y="388" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">cloud confirmation (1 s timeout) · indexing · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="438" y="416" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="500" y="416" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud timeout 3000→1000 ms</text>
+<rect x="996" y="376" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,394.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="403.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.982  ·  p95 682 ms</text>
+<text x="1040" y="421.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">ROBUST · worst of 3 clean runs</text>
+<line x1="142" y1="458" x2="172" y2="472" stroke="#5b6670" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="138" y="472" width="1114" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="152" y="504.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(159,511.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#76b900" stroke="none"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="204" y="500" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">SLOW-CLOUD</text>
+<text x="204" y="517" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud slow</text>
+<text x="204" y="534" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 0.75</text>
+<rect x="204" y="542" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="204" y="542" width="112.5" height="8" rx="4" fill="#76b900"/>
+<text x="468" y="506" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="530" y="506" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">local decisions only · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="468" y="534" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="530" y="534" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud confirmation off · historical indexing off</text>
+<rect x="996" y="494" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,512.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="521.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.965  ·  p95 527 ms</text>
+<text x="1040" y="539.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">MARGINAL · worst of 3 clean runs</text>
+<line x1="172" y1="576" x2="202" y2="590" stroke="#5b6670" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="168" y="590" width="1084" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="182" y="622.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(189,629.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#76b900" stroke="none"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="234" y="618" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">ZOMBIE-CLOUD</text>
+<text x="234" y="635" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud slow but alive</text>
+<text x="234" y="652" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 0.75</text>
+<rect x="234" y="660" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="234" y="660" width="112.5" height="8" rx="4" fill="#76b900"/>
+<text x="498" y="624" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="560" y="624" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">local decisions only · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="498" y="652" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="560" y="652" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud confirmation off · historical indexing off</text>
+<rect x="996" y="612" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,630.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="639.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.965  ·  p95 527 ms</text>
+<text x="1040" y="657.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">MARGINAL · worst of 3 clean runs</text>
+<line x1="202" y1="694" x2="232" y2="708" stroke="#5b6670" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="198" y="708" width="1054" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="212" y="740.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(219,747.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#76b900" stroke="none"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="264" y="736" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">DEAD-CLOUD</text>
+<text x="264" y="753" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud timing out</text>
+<text x="264" y="770" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 0.75</text>
+<rect x="264" y="778" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="264" y="778" width="112.5" height="8" rx="4" fill="#76b900"/>
+<text x="528" y="742" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="590" y="742" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">local decisions only · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="528" y="770" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="590" y="770" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud confirmation off · historical indexing off</text>
+<rect x="996" y="730" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,748.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="757.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.965  ·  p95 527 ms</text>
+<text x="1040" y="775.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">MARGINAL · worst of 3 clean runs</text>
+<line x1="232" y1="812" x2="262" y2="826" stroke="#5b6670" stroke-width="2" marker-end="url(#ah)"/>
+<rect x="228" y="826" width="1024" height="104" rx="14" fill="#ffffff" stroke="#cfd4d9" stroke-width="1.6" filter="url(#soft)"/>
+<rect x="242" y="858.0" width="40" height="40" rx="10" fill="#f2f8e9"/>
+<g transform="translate(249,865.0) scale(1.0833333333333333)" fill="none" stroke="#76b900" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#76b900" stroke="none"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="294" y="854" font-size="16" font-weight="800" fill="#1b2430" text-anchor="start">LOW-BANDWIDTH</text>
+<text x="294" y="871" font-size="11" font-weight="400" fill="#41506a" text-anchor="start">cloud fine · link ≤ 2 Mbps</text>
+<text x="294" y="888" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">capability 0.75</text>
+<rect x="294" y="896" width="150" height="8" rx="4" fill="#e3e8ec"/>
+<rect x="294" y="896" width="112.5" height="8" rx="4" fill="#76b900"/>
+<text x="558" y="860" font-size="11" font-weight="800" fill="#5c8f00" text-anchor="start">keeps</text>
+<text x="620" y="860" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">local decisions only · all cameras · 15 fps @ 640 px on the critical camera</text>
+<text x="558" y="888" font-size="11" font-weight="800" fill="#e8862a" text-anchor="start">gives up</text>
+<text x="620" y="888" font-size="12" font-weight="400" fill="#5b6670" text-anchor="start">cloud confirmation off · historical indexing off</text>
+<rect x="996" y="848" width="236" height="60" rx="10" fill="#f2f8e9" stroke="#76b900" stroke-width="1.5"/>
+<g transform="translate(1010,866.0) scale(0.9166666666666666)" fill="none" stroke="#5c8f00" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></g>
+<text x="1040" y="875.0" font-size="12.5" font-weight="800" fill="#5c8f00" text-anchor="start">recall 0.965  ·  p95 527 ms</text>
+<text x="1040" y="893.0" font-size="11" font-weight="400" fill="#5b6670" text-anchor="start">MARGINAL · worst of 3 clean runs</text>
+<rect x="258" y="944" width="994" height="88" rx="14" fill="#fdf3e6" stroke="#e8862a" stroke-width="1.8"/>
+<rect x="272" y="956" width="38" height="38" rx="10" fill="#fbe3c8"/>
+<g transform="translate(279,962) scale(1.0)" fill="none" stroke="#e8862a" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9.5 16.5H2.5z"/><path d="M12 10v4.5M12 17.2v.1" stroke-width="2.4"/></g>
+<text x="322" y="971" font-size="15" font-weight="800" fill="#9a5a12" text-anchor="start">NO VERIFIED MODE  →  fail closed to `island_10fps` + escalate</text>
+<text x="322" y="993" font-size="12" font-weight="400" fill="#9a5a12" text-anchor="start">cloud fine · device overloaded: every candidate failed (whole space tried)</text>
+<text x="322" y="1015" font-size="12" font-weight="400" fill="#9a5a12" text-anchor="start">cloud dead · device overloaded: every candidate failed · 25 candidates</text>
+</svg>

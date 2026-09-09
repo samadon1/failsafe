@@ -1,0 +1,33 @@
+# Phase 1 failure conditions. Compute pressure levels are realised by competing CPU workers; the
+# observed impact on detector latency is recorded per run (never assumed).
+scenarios:
+  - name: healthy
+    description: baseline, everything works
+    cloud_state: healthy
+  - name: wan_slow
+    description: cloud reachable, ~500 ms RTT
+    cloud_state: slow
+  - name: wan_severely_slow
+    description: cloud reachable, ~1500 ms RTT
+    cloud_state: severely_slow
+  - name: wan_zombie
+    description: cloud accepts requests, answers after 5-10 s
+    cloud_state: zombie
+  - name: wan_timeout
+    description: cloud never answers
+    cloud_state: timeout
+  - name: wan_offline
+    description: cloud unreachable, fails immediately
+    cloud_state: offline
+  - name: bandwidth_2mbps
+    description: cloud healthy but bandwidth constrained
+    cloud_state: healthy
+    bandwidth_mbps: 2
+  - name: compute_severe
+    description: heavy CPU contention, cloud healthy
+    cloud_state: healthy
+    compute_pressure: severe
+  - name: offline_compute_severe
+    description: WAN gone and CPU contention together
+    cloud_state: offline
+    compute_pressure: severe

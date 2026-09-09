@@ -1,0 +1,16 @@
+{
+  "domain": "robot (human\u2013robot proximity safety)",
+  "source": "JRDB via Hugging Face vladyslava-rudas/jrdb-proxemic-risk / image_8/clark-center-intersection-2019-02-28_0",
+  "license": "JRDB \u2014 research (HF mirror)",
+  "frames": 58,
+  "src_fps": 5,
+  "detector": "YOLOv8n @960 CPU",
+  "conf": 0.3,
+  "iou_hit": 0.4,
+  "closest_person_recall": 0.879,
+  "closest_person_recall_high_danger": 0.857,
+  "safety_zone_agreement": 0.943,
+  "zone_frames_with_person": 35,
+  "gt_frames": 58,
+  "note": "Only the CLOSEST person is labeled (the safety-critical one), so we report closest-person detection + safety-zone agreement, not the full recall/precision triple. Real robot-camera footage; never used by the search. Not a certified safety system."
+}

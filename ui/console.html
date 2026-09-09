@@ -1,0 +1,490 @@
+<title>Failsafe Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --panel:#ffffff; --panel2:#f7f9fb; --bord:#e2e7ec; --ink:#161b22; --sub:#5b6670; --faint:#8b97a5;
+  --green:#5c8f00; --green-b:#76b900; --amber:#d9791f; --crit:#d33a3f; --blue:#2f6db0; --violet:#6a49f2;
+  --good-bg:#eef7dd; --warn-bg:#fbeedd; --crit-bg:#fbe1e1; --info-bg:#e7f0fb; --violet-bg:#ece7fd;
+  --shadow:0 1px 2px #0b13200f,0 4px 14px #0b132010;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace; --sans:'IBM Plex Sans',system-ui,Arial,sans-serif;
+}
+:root:not([data-theme="light"]){ @media (prefers-color-scheme:dark){
+  --bg:#0e1116; --panel:#161b22; --panel2:#1b222c; --bord:#28303b; --ink:#e6edf3; --sub:#95a1b0; --faint:#6b7684;
+  --green:#8ed11a; --green-b:#76b900; --amber:#e8952f; --crit:#e5484d; --blue:#5aa2ff; --violet:#9d86ff;
+  --good-bg:#1e2a10; --warn-bg:#2c2110; --crit-bg:#2c1414; --info-bg:#111f30; --violet-bg:#1c1636;
+  --shadow:0 1px 2px #0006,0 6px 18px #0007;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1116; --panel:#161b22; --panel2:#1b222c; --bord:#28303b; --ink:#e6edf3; --sub:#95a1b0; --faint:#6b7684;
+  --green:#8ed11a; --green-b:#76b900; --amber:#e8952f; --crit:#e5484d; --blue:#5aa2ff; --violet:#9d86ff;
+  --good-bg:#1e2a10; --warn-bg:#2c2110; --crit-bg:#2c1414; --info-bg:#111f30; --violet-bg:#1c1636;
+  --shadow:0 1px 2px #0006,0 6px 18px #0007;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1360px;margin:0 auto;padding:18px}
+.lbl{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-weight:600}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 16px;background:var(--panel);border:1px solid var(--bord);border-radius:14px;box-shadow:var(--shadow)}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.brand .nv{font-size:10px;font-weight:800;color:#fff;background:var(--green-b);padding:2px 6px;border-radius:4px;letter-spacing:.06em;align-self:center}
+.brand span{color:var(--sub);font-size:12.5px}
+.spacer{flex:1}
+.mode-pill{display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:12px;font-weight:700;font-size:15px;border:1.5px solid transparent}
+.mode-dot{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 4px #ffffff22}
+.mode-verified{background:var(--good-bg);color:var(--green);border-color:var(--green-b)}
+.mode-fail{background:var(--crit-bg);color:var(--crit);border-color:var(--crit)}
+.mode-sub{font-size:11px;font-weight:500;color:var(--sub)}
+.toggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--sub);cursor:pointer;user-select:none}
+.sw{width:42px;height:24px;border-radius:12px;background:var(--bord);position:relative;transition:.15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.15s;box-shadow:0 1px 3px #0004}
+.toggle.on .sw{background:var(--green-b)} .toggle.on .sw::after{left:21px}
+.icon-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--bord);background:var(--panel2);color:var(--ink);cursor:pointer;font-size:15px}
+
+/* layout */
+.grid{display:grid;grid-template-columns:1fr 344px;gap:16px;margin-top:16px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--bord);border-radius:14px;box-shadow:var(--shadow)}
+.pad{padding:14px 16px}
+.phead{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bord)}
+.phead h2{font-size:13px;letter-spacing:.02em}
+
+/* cameras */
+.cams{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px}
+.cam{border-radius:11px;overflow:hidden;border:1.5px solid var(--bord);background:#0c1013;position:relative;transition:border-color .12s}
+.cam.alert{border-color:var(--green-b);box-shadow:0 0 0 3px #76b90055}
+.cam.miss{border-color:var(--crit)}
+.cam.off{opacity:.42;filter:grayscale(.6)}
+.cam canvas{display:block;width:100%;height:auto}
+.cam .cap{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#cfe;pointer-events:none}
+.cam .cap .name{font-weight:600;background:#00000066;padding:2px 7px;border-radius:5px}
+.cam .cap .fps{font-family:var(--mono);background:#00000066;padding:2px 7px;border-radius:5px;color:#9fce4e}
+.cam .crit{color:#ffd27f}
+.flash{position:absolute;left:8px;bottom:8px;font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;opacity:0;transition:opacity .1s}
+.flash.show{opacity:1}
+.flash.ok{background:#76b900;color:#08210a} .flash.bad{background:#e5484d;color:#fff}
+
+/* right rail */
+.rail{display:flex;flex-direction:column;gap:16px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cbtn{padding:10px;border-radius:10px;border:1px solid var(--bord);background:var(--panel2);color:var(--ink);cursor:pointer;font-family:var(--sans);font-size:12.5px;font-weight:600;text-align:left;display:flex;flex-direction:column;gap:2px;transition:.12s}
+.cbtn small{font-weight:400;color:var(--faint);font-size:10.5px}
+.cbtn:hover{border-color:var(--faint)}
+.cbtn.active{border-color:var(--accentb);background:var(--accbg);color:var(--accfg)}
+.cbtn[data-k="healthy"]{--accentb:var(--green-b);--accbg:var(--good-bg);--accfg:var(--green)}
+.cbtn[data-k="offline"]{--accentb:var(--blue);--accbg:var(--info-bg);--accfg:var(--blue)}
+.cbtn[data-k="zombie"]{--accentb:var(--amber);--accbg:var(--warn-bg);--accfg:var(--amber)}
+.cbtn[data-k="compute"]{--accentb:var(--crit);--accbg:var(--crit-bg);--accfg:var(--crit)}
+.hrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bord)}
+.hrow:last-child{border-bottom:0}
+.hrow .k{color:var(--sub);font-size:12.5px}
+.hrow .v{font-family:var(--mono);font-size:12.5px;display:flex;align-items:center;gap:7px}
+.chip{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;font-family:var(--sans)}
+.chip.good{background:var(--good-bg);color:var(--green)} .chip.warn{background:var(--warn-bg);color:var(--amber)}
+.chip.crit{background:var(--crit-bg);color:var(--crit)} .chip.info{background:var(--info-bg);color:var(--blue)}
+.inv{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bord)}
+.inv:last-child{border-bottom:0}
+.inv .lab{font-size:12.5px}.inv .lab small{display:block;color:var(--faint);font-size:10.5px}
+.inv .val{text-align:right;font-family:var(--mono);font-size:14px;font-weight:600}
+.inv .val small{display:block;color:var(--faint);font-size:10px;font-weight:400}
+.pass{color:var(--green)}.faily{color:var(--crit)}
+.modecard .name{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.meter{height:8px;border-radius:4px;background:var(--bord);overflow:hidden;margin:8px 0}
+.meter i{display:block;height:100%;background:var(--green-b);border-radius:4px;transition:width .3s}
+.kv{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.kv span{font-size:11px;font-family:var(--mono);padding:3px 8px;border-radius:6px;background:var(--panel2);border:1px solid var(--bord);color:var(--sub)}
+.kv span.on{color:var(--green);border-color:#76b90055}
+.kv span.offk{color:var(--faint);text-decoration:line-through}
+
+/* event log */
+.log{max-height:230px;overflow-y:auto;font-family:var(--mono);font-size:12px;padding:6px 0}
+.ev{display:grid;grid-template-columns:64px 84px 1fr;gap:10px;padding:5px 16px;align-items:baseline;border-bottom:1px solid var(--bord)}
+.ev:last-child{border:0}
+.ev .t{color:var(--faint)}
+.ev .tag{font-weight:600;font-size:10.5px;padding:1px 7px;border-radius:5px;text-align:center;justify-self:start}
+.tag.alert{background:var(--good-bg);color:var(--green)} .tag.miss{background:var(--crit-bg);color:var(--crit)}
+.tag.mode{background:var(--info-bg);color:var(--blue)} .tag.nvm{background:var(--crit-bg);color:var(--crit)}
+.tag.sys{background:var(--panel2);color:var(--sub)}
+.ev .m{color:var(--ink)} .ev .m b{color:var(--green)} .ev .m .a{color:var(--amber)} .ev .m .c{color:var(--crit)}
+
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px}
+@media(max-width:760px){.ladder{grid-template-columns:1fr 1fr}}
+.rung{border:1px solid var(--bord);border-radius:11px;padding:12px;background:var(--panel2);position:relative}
+.rung.active{border-color:var(--green-b);box-shadow:0 0 0 2px #76b90033}
+.rung .rn{font-weight:700;font-size:13px}
+.rung .cap{font-size:11px;color:var(--faint);font-family:var(--mono)}
+.rung .m2{height:6px;border-radius:3px;background:var(--bord);margin:7px 0;overflow:hidden}
+.rung .m2 i{display:block;height:100%;background:var(--green-b)}
+.rung .nums{font-family:var(--mono);font-size:11px;color:var(--sub)}
+.rung .cond{font-size:10.5px;color:var(--faint);margin-top:4px}
+.foot{color:var(--faint);font-size:11px;margin-top:14px;text-align:center;line-height:1.6}
+.note{font-size:11px;color:var(--faint)}
+.stat{display:flex;gap:18px;flex-wrap:wrap}
+.stat div{display:flex;flex-direction:column}
+.stat b{font-family:var(--mono);font-size:20px;font-weight:600}
+.stat small{color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+</style>
+
+<div class="wrap">
+  <!-- TOP BAR -->
+  <div class="top">
+    <div class="brand"><b>FAILSAFE</b><span class="nv">NVIDIA</span><span>resilience console · restricted-zone monitor</span></div>
+    <div class="spacer"></div>
+    <div id="modePill" class="mode-pill mode-verified">
+      <span class="mode-dot" style="background:var(--green-b)"></span>
+      <div><div id="modeName">NORMAL</div><div class="mode-sub" id="modeSub">verified · cloud on · 1 s timeout</div></div>
+    </div>
+    <div class="toggle on" id="fsToggle" title="Failsafe policy runtime on/off"><span>Failsafe</span><span class="sw"></span></div>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme">◑</button>
+  </div>
+
+  <div class="grid">
+    <!-- MAIN -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="panel">
+        <div class="phead"><h2>FACILITY · 4 CAMERAS</h2><span class="note">simulated feed · recall &amp; latency drawn from measured modes</span></div>
+        <div class="cams" id="cams"></div>
+      </div>
+      <div class="panel">
+        <div class="phead">
+          <h2>EVENT LOG</h2>
+          <div class="stat">
+            <div><b id="sDet">0/0</b><small>intrusions caught</small></div>
+            <div><b id="sMiss" style="color:var(--crit)">0</b><small>missed</small></div>
+            <div><b id="sTrans">0</b><small>mode switches</small></div>
+          </div>
+        </div>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT RAIL -->
+    <div class="rail">
+      <div class="panel pad">
+        <div class="lbl" style="margin-bottom:9px">Inject a condition</div>
+        <div class="controls" id="controls">
+          <button class="cbtn active" data-k="healthy">Healthy<small>cloud ~50 ms</small></button>
+          <button class="cbtn" data-k="offline">Cut WAN<small>cloud offline</small></button>
+          <button class="cbtn" data-k="zombie">Zombie cloud<small>answers in 5–10 s</small></button>
+          <button class="cbtn" data-k="compute">Compute pressure<small>detector 3× slower</small></button>
+        </div>
+        <div class="note" style="margin-top:10px">Degrade after 3 consistent probes · recover after 5 (hysteresis).</div>
+      </div>
+
+      <div class="panel">
+        <div class="phead"><h2>SYSTEM HEALTH</h2></div>
+        <div class="pad" style="padding-top:2px">
+          <div class="hrow"><span class="k">WAN / cloud</span><span class="v"><span id="hCloudChip" class="chip good">healthy</span><span id="hRtt">52 ms</span></span></div>
+          <div class="hrow"><span class="k">Compute pressure</span><span class="v"><span id="hCompChip" class="chip good">normal</span><span id="hSlow">1.0×</span></span></div>
+          <div class="hrow"><span class="k">Bandwidth</span><span class="v" id="hBw">38 Mbps</span></div>
+          <div class="hrow"><span class="k">Detector</span><span class="v" id="hDet">YOLOv8n · 640 px</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="phead"><h2>MISSION INVARIANTS</h2></div>
+        <div class="pad" style="padding-top:2px">
+          <div class="inv"><span class="lab">Critical-event recall<small>rolling, this session</small></span><span class="val"><span id="ivRec">1.000</span><small>≥ 0.95</small></span></div>
+          <div class="inv"><span class="lab">Alert latency p95<small>first alert per event</small></span><span class="val"><span id="ivLat">0.90 s</span><small>≤ 2.0 s</small></span></div>
+          <div class="inv"><span class="lab">Survive WAN loss<small>keep alerting offline</small></span><span class="val"><span id="ivWan">required</span><small id="ivWanS">holding</small></span></div>
+        </div>
+      </div>
+
+      <div class="panel pad modecard">
+        <div class="lbl" style="margin-bottom:6px">Active operating mode</div>
+        <div class="name"><span id="mcName">NORMAL</span><span id="mcTier" class="chip good">verified</span></div>
+        <div class="cap mono" style="color:var(--faint);font-size:11px" id="mcCap">capability retained 1.00</div>
+        <div class="meter"><i id="mcMeter" style="width:100%"></i></div>
+        <div class="kv" id="mcKv"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POLICY LADDER -->
+  <div class="panel" style="margin-top:16px">
+    <div class="phead"><h2>COMPILED RESILIENCE POLICY · verified modes</h2><span class="note">each mode links to the experiment that verified it · measured on the quick corpus (57 events)</span></div>
+    <div class="ladder" id="ladder"></div>
+    <div style="padding:0 16px 16px"><div class="note">Under <b>severe compute pressure</b> no configuration in the 72-mode space passes (best recall 0.807 &lt; 0.95). The runtime then reports <span style="color:var(--crit);font-weight:600">NO VERIFIED MODE</span> and fails closed — it never activates an unverified mode.</div></div>
+  </div>
+
+  <div class="foot">
+    Simulated operator console. Camera feeds are illustrative; every recall, latency and capability figure is drawn from Failsafe's measured experiments (<span class="mono">artifacts/</span>).
+    Runtime logic mirrors the deterministic policy runtime — no model runs in the decision loop.<br>
+    NVIDIA Nemotron via Nebius Token Factory / NVIDIA Build; NVIDIA marks used only to identify sponsor technology.
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ---- real measured modes (per operating condition) ---- */
+const MODES = {
+  healthy:  {name:"NORMAL",   cond:"healthy",       cloud:"on · 1 s timeout", recall:0.982, p95:902,  cap:1.00, tier:"verified",
+             on:["cloud confirm","indexing","4 cameras"], off:[]},
+  offline:  {name:"ISLAND",   cond:"WAN offline",   cloud:"off (local only)", recall:0.965, p95:970,  cap:0.73, tier:"verified",
+             on:["local detect","critical 15 fps"], off:["cloud confirm","indexing","bg → 1 fps"]},
+  zombie:   {name:"ZOMBIE-CLOUD", cond:"zombie cloud", cloud:"on · 1 s timeout", recall:0.982, p95:1583, cap:1.00, tier:"verified",
+             on:["cloud confirm","short timeout","indexing"], off:[]},
+  compute:  {name:"NO VERIFIED MODE", cond:"compute pressure", cloud:"—", recall:0.807, p95:1900, cap:0.00, tier:"none",
+             on:[], off:["nothing passes → fail closed"]},
+};
+const LADDER = [
+  {n:"NORMAL",  cap:1.00, rec:0.982, p95:902,  cond:"healthy",        k:"healthy"},
+  {n:"ZOMBIE-CLOUD",cap:1.00, rec:0.982, p95:1583, cond:"zombie cloud", k:"zombie"},
+  {n:"ISLAND",  cap:0.73, rec:0.965, p95:970,  cond:"WAN offline",    k:"offline"},
+  {n:"SURVIVAL",cap:0.51, rec:0.982, p95:583,  cond:"critical only",  k:null},
+];
+const NAIVE = {name:"NAIVE (static)", recall:0.965, p95:1000}; // drop-on-fail: misses when cloud unreachable
+
+/* ---- state ---- */
+let failsafe=true, observed="healthy", active="healthy";
+let pend=null, pendN=0;
+let det=0, tot=0, miss=0, trans=0;
+const lats=[];
+const CAMS=[
+  {id:"A",name:"Loading zone",crit:true,base:0.62},
+  {id:"B",name:"Warehouse aisle",crit:false,base:0.13},
+  {id:"C",name:"Storage",crit:false,base:0.13},
+  {id:"D",name:"Entrance",crit:false,base:0.12},
+];
+let t0=Date.now();
+const $=s=>document.querySelector(s), el=(id)=>document.getElementById(id);
+
+/* ---- clock ---- */
+function ts(){const s=(Date.now()-t0)/1000;return s.toFixed(1).padStart(5,"0")+"s";}
+
+/* ---- build cameras ---- */
+const canv={};
+function buildCams(){
+  const box=el("cams"); box.innerHTML="";
+  CAMS.forEach(c=>{
+    const d=document.createElement("div"); d.className="cam"; d.id="cam"+c.id;
+    d.innerHTML=`<div class="cap"><span class="name ${c.crit?'crit':''}">${c.crit?'★ ':''}Camera ${c.id} · ${c.name}</span><span class="fps" id="fps${c.id}">15 fps</span></div>
+      <canvas id="cv${c.id}" width="360" height="150"></canvas>
+      <div class="flash" id="fl${c.id}"></div>`;
+    box.appendChild(d);
+    canv[c.id]={cv:d.querySelector("canvas"),ctx:d.querySelector("canvas").getContext("2d"),person:null,seed:Math.random()*6};
+  });
+}
+function zone(id){ // polygon per camera (foot coords in 360x150)
+  const z={A:[[120,70],[240,70],[268,128],[92,128]],B:[[140,64],[250,64],[270,120],[120,120]],
+           C:[[110,66],[236,66],[258,124],[88,124]],D:[[150,60],[248,60],[262,116],[136,116]]};
+  return z[id];
+}
+function drawCam(id){
+  const o=canv[id],ctx=o.ctx,W=360,H=150;
+  const cs=getComputedStyle(document.documentElement);
+  const dark=(cs.getPropertyValue('--bg').trim()!=='#f4f6f8');
+  // floor
+  ctx.fillStyle=dark?"#0c1013":"#11161b"; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=dark?"#161d24":"#1a222a"; ctx.fillRect(0,0,W,42);
+  // shelves
+  ctx.strokeStyle="#2a333c"; ctx.lineWidth=1;
+  for(let x=14;x<W;x+=52){ctx.strokeRect(x,8,40,26);}
+  // zone
+  const z=zone(id); ctx.beginPath(); z.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])); ctx.closePath();
+  const camoff = CAMS.find(c=>c.id===id).fpsOff;
+  ctx.fillStyle="#e6c22e22"; ctx.fill(); ctx.strokeStyle="#e6c22e"; ctx.lineWidth=2; ctx.setLineDash([6,4]); ctx.stroke(); ctx.setLineDash([]);
+  // person
+  const p=o.person;
+  if(p){
+    const x=p.x, y=p.y;
+    ctx.fillStyle=p.inzone?(p.detected?"#76b900":"#e5484d"):"#c9d4de";
+    ctx.beginPath(); ctx.arc(x,y-16,6,0,7); ctx.fill();
+    ctx.fillRect(x-4,y-11,8,12);
+  }
+  if(camoff){ctx.fillStyle="#000000aa";ctx.fillRect(0,0,W,H);ctx.fillStyle="#8b97a5";ctx.font="12px 'IBM Plex Mono'";ctx.fillText("stream paused (0 fps)",112,78);}
+}
+function inZone(id,x,y){const z=zone(id);let s=0;for(let i=0;i<z.length;i++){const a=z[i],b=z[(i+1)%z.length];const cr=(b[0]-a[0])*(y-a[1])-(b[1]-a[1])*(x-a[0]);const sg=cr>0?1:-1;if(Math.abs(cr)<1e-6)continue;if(s===0)s=sg;else if(sg!==s)return false;}return true;}
+
+/* ---- runtime: classify + hysteresis + select verified mode ---- */
+function modeFor(cond){
+  if(!failsafe){ // naive static config: only "healthy" behaviour; fails under offline/zombie/compute
+    return {...MODES.healthy, name:"NAIVE (static)", tier:"naive", naive:true};
+  }
+  return MODES[cond]||MODES.healthy;
+}
+function step(){
+  // hysteresis on the observed condition
+  if(observed!==active){
+    if(pend!==observed){pend=observed;pendN=1;}
+    else pendN++;
+    const degrading = rank(observed)>rank(active);
+    const need = degrading?3:5;
+    if(pendN>=need){ switchMode(observed); pend=null; pendN=0; }
+  } else {pend=null;pendN=0;}
+}
+function rank(c){return {healthy:0,zombie:1,offline:2,compute:3}[c];}
+function switchMode(c){
+  active=c; trans++; el("sTrans").textContent=trans;
+  const m=modeFor(c); const verified=m.tier!=="none";
+  const naiveFail = m.naive && c!=="healthy";
+  if(m.tier==="none"){
+    logEv("nvm","NO VERIFIED MODE","<span class='c'>no mode passes under "+MODES[c].cond+" → fail closed &amp; escalate</span>");
+  } else if(naiveFail){
+    logEv("nvm","UNPROTECTED","<span class='c'>naive config kept — cloud path stalls under "+MODES[c].cond+"</span>");
+  } else {
+    logEv("mode","MODE → "+m.name,"verified for <b>"+MODES[c].cond+"</b> · recall "+m.recall.toFixed(3)+" · p95 "+(m.p95/1000).toFixed(2)+" s");
+  }
+  render();
+}
+
+/* ---- intrusions (person crosses a zone) ---- */
+function spawn(){
+  // choose camera weighted; critical camera A gets most events
+  let r=Math.random(),acc=0,pick=CAMS[0];
+  for(const c of CAMS){acc+=c.base;if(r<=acc){pick=c;break;}}
+  const id=pick.id, o=canv[id];
+  const camOff = pick.fpsOff;
+  o.person={x:70,y:100,vx:2.6,inzone:false,detected:false,scored:false,enter:0};
+  o.person.crit=pick.crit;
+}
+function detectOutcome(id){
+  const m=modeFor(active);
+  // camera off (background dropped under some modes)? critical always on
+  // recall by active mode; naive under failure = 0 (cloud stalls / drops)
+  let recall=m.recall;
+  if(m.naive && active!=="healthy") recall = active==="offline"?0.0:0.35; // dead cloud → misses; zombie → most late/miss
+  if(m.tier==="none") recall = 0.55; // degraded, unverified
+  // p95-based latency with jitter
+  let lat = m.p95*(0.55+Math.random()*0.7);
+  if(m.naive && active==="zombie") lat = 5000+Math.random()*400; // stalls on zombie
+  if(m.tier==="none") lat = 1600+Math.random()*900;
+  const hit = Math.random()<recall;
+  const late = lat>2000;
+  return {hit, lat, late};
+}
+
+/* ---- main tick ---- */
+function tick(){
+  step();
+  CAMS.forEach(c=>{
+    const o=canv[c.id],p=o.person;
+    if(p){
+    p.x+=p.vx;
+    const nowIn=inZone(c.id,p.x,p.y);
+    if(nowIn&&!p.inzone){p.inzone=true;p.enter=Date.now();
+      if(!p.scored){
+        p.scored=true; tot++;
+        const r=detectOutcome(c.id);
+        if(r.hit && !(r.late)){ det++; p.detected=true; lats.push(r.lat);
+          flash(c.id,"ok","ALERT "+(r.lat/1000).toFixed(2)+"s"); markCam(c.id,"alert");
+          logEv("alert","ALERT","Camera "+c.id+(c.crit?" ★":"")+" · person in zone · <b>"+(r.lat/1000).toFixed(2)+" s</b>");
+        } else {
+          miss++; p.detected=false;
+          const why = r.late? "alert too late ("+(r.lat/1000).toFixed(1)+"s)":"not detected";
+          flash(c.id,"bad","MISS"); markCam(c.id,"miss");
+          logEv("miss","MISS","<span class='c'>Camera "+c.id+" · "+why+"</span>");
+        }
+        el("sDet").textContent=det+"/"+tot; el("sMiss").textContent=miss;
+        renderInv();
+      }
+    }
+    if(!nowIn&&p.inzone){p.inzone=false;}
+    if(p.x>330){o.person=null;}
+    }
+    drawCam(c.id);
+  });
+}
+function markCam(id,cls){const c=el("cam"+id);c.classList.add(cls);setTimeout(()=>c.classList.remove(cls),700);}
+function flash(id,cls,txt){const f=el("fl"+id);f.textContent=txt;f.className="flash "+cls+" show";setTimeout(()=>f.className="flash "+cls,750);}
+
+/* ---- logging ---- */
+function logEv(tag,label,msg){
+  const l=el("log");const d=document.createElement("div");d.className="ev";
+  d.innerHTML=`<span class="t">${ts()}</span><span class="tag ${tag}">${label}</span><span class="m">${msg}</span>`;
+  l.prepend(d); while(l.children.length>60)l.lastChild.remove();
+}
+
+/* ---- render health / invariants / mode / ladder ---- */
+function p95(){if(!lats.length)return 0;const s=[...lats].sort((a,b)=>a-b);return s[Math.min(s.length-1,Math.floor(.95*(s.length-1)))];}
+function renderInv(){
+  const rec = tot? det/tot : 1;
+  el("ivRec").textContent=rec.toFixed(3); el("ivRec").className=rec>=0.95?"pass":"faily";
+  const l=p95()/1000; el("ivLat").textContent=(lats.length?l.toFixed(2):"—")+" s"; el("ivLat").className=(l<=2||!lats.length)?"pass":"faily";
+  const wanOk = !(active==="offline" && modeFor(active).naive);
+  el("ivWan").textContent=wanOk?"holding":"BREACHED"; el("ivWan").className=wanOk?"pass":"faily";
+  el("ivWanS").textContent=wanOk?"alerting offline":"missing events";
+}
+function render(){
+  const m=modeFor(active), verified=m.tier==="verified", fail=(m.tier==="none")||(m.naive&&active!=="healthy");
+  // mode pill
+  const pill=el("modePill");
+  pill.className="mode-pill "+(fail?"mode-fail":"mode-verified");
+  el("modeName").textContent=m.name;
+  el("modeSub").textContent=fail?(m.tier==="none"?"NO VERIFIED MODE · fail closed":"unprotected · cloud stalling"):("verified · cloud "+m.cloud);
+  pill.querySelector(".mode-dot").style.background=fail?"var(--crit)":"var(--green-b)";
+  // health
+  const H={healthy:{c:"good",cl:"healthy",rtt:"52 ms",comp:"good",compL:"normal",slow:"1.0×",bw:"38 Mbps"},
+           offline:{c:"crit",cl:"offline",rtt:"— (no route)",comp:"good",compL:"normal",slow:"1.0×",bw:"—"},
+           zombie:{c:"warn",cl:"zombie",rtt:"5–10 s",comp:"good",compL:"normal",slow:"1.0×",bw:"22 Mbps"},
+           compute:{c:"good",cl:"healthy",rtt:"55 ms",comp:"crit",compL:"severe",slow:"3.1×",bw:"38 Mbps"}}[observed];
+  el("hCloudChip").className="chip "+H.c; el("hCloudChip").textContent=H.cl; el("hRtt").textContent=H.rtt;
+  el("hCompChip").className="chip "+H.comp; el("hCompChip").textContent=H.compL; el("hSlow").textContent=H.slow;
+  el("hBw").textContent=H.bw;
+  el("hDet").textContent = m.name==="ISLAND"?"YOLOv8n · 640 px · local":"YOLOv8n · 640 px";
+  // mode card
+  el("mcName").textContent=m.name;
+  const tierChip=el("mcTier"); tierChip.textContent=fail?"fail closed":m.tier;
+  tierChip.className="chip "+(fail?"crit":"good");
+  el("mcCap").textContent="capability retained "+m.cap.toFixed(2);
+  el("mcMeter").style.width=(m.cap*100)+"%";
+  el("mcMeter").style.background=fail?"var(--crit)":"var(--green-b)";
+  const kv=el("mcKv");kv.innerHTML="";
+  m.on.forEach(x=>{const s=document.createElement("span");s.className="on";s.textContent="✓ "+x;kv.appendChild(s);});
+  m.off.forEach(x=>{const s=document.createElement("span");s.className=m.tier==="none"?"":"offk";s.textContent=(m.tier==="none"?"":"✕ ")+x;kv.appendChild(s);});
+  // cameras: background cams paused at bg 1fps in island? keep simple: island pauses D
+  CAMS.forEach(c=>{c.fpsOff=(m.name==="ISLAND"&&c.id==="D");
+    const f=el("fps"+c.id); if(f)f.textContent=c.crit?(m.name==="SURVIVAL"?"5 fps":"15 fps"):(m.name==="ISLAND"||m.name==="SURVIVAL"?(c.fpsOff?"0 fps":"1 fps"):"15 fps");
+    const cam=el("cam"+c.id); if(cam)cam.classList.toggle("off",!!c.fpsOff);
+  });
+  // ladder active
+  document.querySelectorAll(".rung").forEach(r=>r.classList.toggle("active",r.dataset.n===m.name));
+  renderInv();
+}
+function buildLadder(){
+  const box=el("ladder");box.innerHTML="";
+  LADDER.forEach(r=>{
+    const d=document.createElement("div");d.className="rung";d.dataset.n=r.n;
+    d.innerHTML=`<div class="rn">${r.n}</div><div class="cap">capability ${r.cap.toFixed(2)}</div>
+      <div class="m2"><i style="width:${r.cap*100}%"></i></div>
+      <div class="nums">recall ${r.rec.toFixed(3)} · p95 ${(r.p95/1000).toFixed(2)} s</div>
+      <div class="cond">${r.cond}</div>`;
+    box.appendChild(d);
+  });
+}
+
+/* ---- controls ---- */
+el("controls").addEventListener("click",e=>{
+  const b=e.target.closest(".cbtn"); if(!b)return;
+  observed=b.dataset.k;
+  document.querySelectorAll(".cbtn").forEach(x=>x.classList.toggle("active",x===b));
+  logEv("sys","CONDITION",{healthy:"cloud healthy",offline:"WAN cut — cloud unreachable",zombie:"cloud degraded — 5–10 s responses",compute:"compute pressure — detector 3× slower"}[observed]);
+  render();
+});
+el("fsToggle").addEventListener("click",()=>{
+  failsafe=!failsafe; el("fsToggle").classList.toggle("on",failsafe);
+  logEv("sys","FAILSAFE",failsafe?"policy runtime <b>enabled</b>":"<span class='c'>policy runtime disabled — naive static config</span>");
+  // re-evaluate immediately
+  switchMode(active);
+});
+el("themeBtn").addEventListener("click",()=>{
+  const r=document.documentElement, cur=r.getAttribute("data-theme");
+  const sysDark=matchMedia("(prefers-color-scheme:dark)").matches;
+  const next = cur? (cur==="dark"?"light":"dark") : (sysDark?"light":"dark");
+  r.setAttribute("data-theme",next);
+});
+
+/* ---- boot ---- */
+buildCams(); buildLadder(); render(); CAMS.forEach(c=>drawCam(c.id));
+logEv("sys","BOOT","Failsafe console online · policy loaded (4 verified modes) · monitoring 4 cameras");
+setInterval(tick,110);
+setInterval(()=>{ if(Math.random()<0.5) spawn(); },1500);
+setTimeout(spawn,700);
+</script>

@@ -1,0 +1,23 @@
+{
+  "domain": "robot manipulation (object detection)",
+  "source": "YCB-Video / seq 0011 (Linpeng502502/YCB_Video_Dataset)",
+  "license": "YCB-Video \u2014 research",
+  "frames": 111,
+  "src_fps": 7,
+  "detector": "YOLOv8n @800 CPU (COCO classes)",
+  "conf": 0.3,
+  "iou_hit": 0.4,
+  "scored_classes": [
+    "banana",
+    "bottle",
+    "bowl",
+    "cup",
+    "scissors"
+  ],
+  "object_detection_recall": 0.273,
+  "object_detection_precision": 0.989,
+  "gt_object_boxes": 333,
+  "workspace_frames_with_object": 104,
+  "workspace_agreement": 0.712,
+  "note": "Class-aware recall/precision on the COCO-known YCB objects only (bottle/bowl/cup/banana/scissors); domain-specific objects are outside the generic detector's vocabulary \u2014 a capability gap Failsafe surfaces. Never used by the search. Not certified."
+}

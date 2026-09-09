@@ -1,0 +1,17 @@
+{
+  "source": "NVIDIA PhysicalAI-SmartSpaces / MTMC_Tracking_2025 / val / Warehouse_015 / Camera",
+  "license": "CC-BY 4.0",
+  "frames": 270,
+  "segment_s": [
+    60.0,
+    105.0
+  ],
+  "out_fps": 6,
+  "detector": "YOLOv8n @640 CPU",
+  "conf": 0.35,
+  "person_detection_recall": 0.72,
+  "person_detection_precision": 0.971,
+  "gt_person_boxes": 5370,
+  "zone_gt_events": 1,
+  "note": "Real detections on real (Omniverse-generated) footage, scored against dataset ground truth. Never used by the search."
+}

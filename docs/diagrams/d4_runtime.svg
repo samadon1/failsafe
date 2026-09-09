@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="620" viewBox="0 0 1300 620" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="7.5" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#7c848d"/></marker><marker id="ahg" markerWidth="10" markerHeight="10" refX="7.5" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#5c8f00"/></marker><marker id="aha" markerWidth="10" markerHeight="10" refX="7.5" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#e8862a"/></marker><filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0b132010" flood-opacity="0.18"/></filter></defs>
+<rect x="0" y="0" width="1300" height="620" rx="0" fill="#ffffff"/>
+<text x="48" y="50" font-size="25" font-weight="800" fill="#1b2430" text-anchor="start">The runtime state machine</text>
+<text x="48" y="78" font-size="12.5" font-weight="400" fill="#5b6670" text-anchor="start">On the device, a plain deterministic loop moves between verified modes as conditions change — degrading fast, recovering</text>
+<text x="48" y="97" font-size="12.5" font-weight="400" fill="#5b6670" text-anchor="start">slowly, and never activating anything that was not verified for the current condition.</text>
+<rect x="115.0" y="191.0" width="210" height="78" rx="14" fill="#ffffff" stroke="#76b900" stroke-width="2.2" filter="url(#soft)"/>
+<rect x="129.0" y="211" width="38" height="38" rx="10" fill="#f2f8e9"/>
+<g transform="translate(136.0,218) scale(1.0)" fill="none" stroke="#76b900" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M8.5 12l2.4 2.4L16 9.5"/></g>
+<text x="177.0" y="227" font-size="15" font-weight="800" fill="#1b2430" text-anchor="start">NORMAL</text>
+<text x="177.0" y="246" font-size="10.8" font-weight="400" fill="#5b6670" text-anchor="start">cloud on · 1 s timeout</text>
+<rect x="415.0" y="191.0" width="210" height="78" rx="14" fill="#ffffff" stroke="#76b900" stroke-width="2.2" filter="url(#soft)"/>
+<rect x="429.0" y="211" width="38" height="38" rx="10" fill="#f2f8e9"/>
+<g transform="translate(436.0,218) scale(1.0)" fill="none" stroke="#76b900" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1" fill="#76b900" stroke="none"/><path d="M9 6V3M15 6V3M9 21v-3M15 21v-3M6 9H3M6 15H3M21 9h-3M21 15h-3"/></g>
+<text x="477.0" y="227" font-size="15" font-weight="800" fill="#1b2430" text-anchor="start">ISLAND</text>
+<text x="477.0" y="246" font-size="10.8" font-weight="400" fill="#5b6670" text-anchor="start">local only · bg 1 fps</text>
+<rect x="715.0" y="191.0" width="210" height="78" rx="14" fill="#ffffff" stroke="#76b900" stroke-width="2.2" filter="url(#soft)"/>
+<rect x="729.0" y="211" width="38" height="38" rx="10" fill="#f2f8e9"/>
+<g transform="translate(736.0,218) scale(1.0)" fill="none" stroke="#76b900" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></g>
+<text x="777.0" y="227" font-size="15" font-weight="800" fill="#1b2430" text-anchor="start">SURVIVAL</text>
+<text x="777.0" y="246" font-size="10.8" font-weight="400" fill="#5b6670" text-anchor="start">critical cam · 5 fps</text>
+<rect x="975.0" y="191.0" width="210" height="78" rx="14" fill="#ffffff" stroke="#e8862a" stroke-width="2.2" filter="url(#soft)"/>
+<rect x="989.0" y="211" width="38" height="38" rx="10" fill="#fdf3e6"/>
+<g transform="translate(996.0,218) scale(1.0)" fill="none" stroke="#e8862a" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9.5 16.5H2.5z"/><path d="M12 10v4.5M12 17.2v.1" stroke-width="2.4"/></g>
+<text x="1037.0" y="227" font-size="15" font-weight="800" fill="#1b2430" text-anchor="start">NO VERIFIED MODE</text>
+<text x="1037.0" y="246" font-size="10.8" font-weight="400" fill="#5b6670" text-anchor="start">fail closed · escalate</text>
+<circle cx="80" cy="230" r="9" fill="#1b2430"/>
+<line x1="90" y1="230" x2="115" y2="230" stroke="#7c848d" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M325,191 C 325,168 415,168 415,191" fill="none" stroke="#2f6db0" stroke-width="2.2"  marker-end="url(#ah)"/>
+<text x="370.0" y="160" font-size="11.5" font-weight="700" fill="#2f6db0" text-anchor="middle">cloud slow/zombie · WAN loss</text>
+<path d="M625,191 C 625,168 715,168 715,191" fill="none" stroke="#2f6db0" stroke-width="2.2"  marker-end="url(#ah)"/>
+<text x="670.0" y="160" font-size="11.5" font-weight="700" fill="#2f6db0" text-anchor="middle">compute pressure</text>
+<path d="M925,191 C 925,168 975,168 975,191" fill="none" stroke="#e8862a" stroke-width="2.2"  marker-end="url(#aha)"/>
+<text x="950.0" y="160" font-size="11.5" font-weight="700" fill="#e8862a" text-anchor="middle">recall ceiling &lt; 0.95</text>
+<path d="M415,269 C 415,292 325,292 325,269" fill="none" stroke="#5c8f00" stroke-width="2.2" stroke-dasharray='5 5' marker-end="url(#ahg)"/>
+<text x="370.0" y="310" font-size="11.5" font-weight="700" fill="#5c8f00" text-anchor="middle">cloud healthy (5 probes)</text>
+<path d="M715,269 C 715,292 625,292 625,269" fill="none" stroke="#5c8f00" stroke-width="2.2" stroke-dasharray='5 5' marker-end="url(#ahg)"/>
+<text x="670.0" y="310" font-size="11.5" font-weight="700" fill="#5c8f00" text-anchor="middle">pressure clears</text>
+<rect x="48" y="400" width="1204" height="150" rx="16" fill="#eef1f6"/>
+<text x="72" y="432" font-size="14.5" font-weight="800" fill="#1b2430" text-anchor="start">How a transition fires</text>
+<circle cx="84" cy="462" r="12" fill="#ffffff" stroke="#5b6670" stroke-width="1.6"/>
+<text x="84" y="466.5" font-size="12" font-weight="800" fill="#5b6670" text-anchor="middle">1</text>
+<text x="104" y="466" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">A health ping + the detector&#x27;s own timing produce an observed condition about every 2 seconds.</text>
+<circle cx="84" cy="492" r="12" fill="#ffffff" stroke="#5b6670" stroke-width="1.6"/>
+<text x="84" y="496.5" font-size="12" font-weight="800" fill="#5b6670" text-anchor="middle">2</text>
+<text x="104" y="496" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">A change must persist for N consistent probes before it takes effect — degrade N=3, recover N=5 (no flapping).</text>
+<circle cx="84" cy="522" r="12" fill="#ffffff" stroke="#e8862a" stroke-width="1.6"/>
+<text x="84" y="526.5" font-size="12" font-weight="800" fill="#e8862a" text-anchor="middle">3</text>
+<text x="104" y="526" font-size="12" font-weight="400" fill="#1b2430" text-anchor="start">The mode is a compiled-policy lookup; if none matches, the runtime reports NO VERIFIED MODE and holds the conservative fallback.</text>
+<rect x="960" y="420" width="280" height="26" rx="13.0" fill="#e7f0fb"/>
+<text x="1100.0" y="437.5" font-size="11" font-weight="700" fill="#2f6db0" text-anchor="middle">solid → degrade (fast)   ·   dashed ← recover (slow)</text>
+</svg>
